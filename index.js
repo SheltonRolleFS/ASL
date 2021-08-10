@@ -1,7 +1,15 @@
 const express = require('express')
 const app = express()
-const pageRouter = require('./src/controllers/page')
+const quizzesCtrl = require('./src/controllers/quizzes')
 
-app.use('/', pageRouter)
+app.get('/', (req, res) => {
+    res.send('Home Page! GET...')
+})
+
+app.use('/quizzes', quizzesCtrl)
 
 app.listen(3000)
+// ------ Week 1 Code
+// const pageRouter = require('./src/controllers/page')
+
+// app.use('/', pageRouter)
