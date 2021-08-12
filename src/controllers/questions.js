@@ -21,15 +21,21 @@ router.post('/', (req, res) => {
     res.json(questions)
 })
 
-router.get('/:quizID', (req, res) => {
-    const quizID = req.params.quizID
-    const quizQuestions = questions.find(q => q.quizId == quizID)
-    res.json(quizQuestions)
+router.get('/:quizID/:id', (req, res) => {
+    const { quizID, id } = req.params
+    questions.map((q) => {
+        if(q.quizId == quizID){
+            q.questions.map((question) => {
+                if(question.id == id){
+                    res.json(question)
+                }
+            })
+        }
+    })
 })
 
-router.post('/:quizID', (req, res) => {
-    const id = Number(req.body.id)
-    const quizID = req.params.quizID
+router.post('/:quizID/:id', (req, res) => {
+    const { quizID, id } = req.params
 
     questions.map((q) => {
         if(quizID == q.quizId){
