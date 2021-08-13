@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({ extended: false }))
-let questions = require('../models/questions')
+// let questions = require('../models/questions')
 
 router.get('/', (req, res) => {
     res.json(questions)
