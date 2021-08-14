@@ -3,6 +3,8 @@ const app = express()
 const quizzesCtrl = require('./src/controllers/quizzes')
 const questionsCtrl = require('./src/controllers/questions')
 const choicesCtrl = require('./src/controllers/choices')
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
     res.send('Home Page! GET...')
