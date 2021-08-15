@@ -7,7 +7,12 @@ router.get('/', async (req, res) => {
     res.json(quizzes)
 })
 router.post('/', async (req, res) => {
-    const quiz = await Quiz.create(req.body)
+    const name = req.body.name
+    const weight = Number(req.body.weight)
+    const quiz = await Quiz.create({
+        name,
+        weight: weight
+    })
     res.send(quiz)
 })
 router.get('/:id', async (req, res) => {
