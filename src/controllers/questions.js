@@ -1,71 +1,38 @@
 const express = require('express')
 const router = express.Router()
-const bodyParser = require('body-parser')
-router.use(bodyParser.urlencoded({ extended: false }))
-// let questions = require('../models/questions')
+const { Questions, Quiz } = require('../models')
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const questions = await Questions.findAll({ 
+        include: Quiz
+     })
     res.json(questions)
 })
-
-router.post('/', (req, res) => {
-    const { quizID, id, question } = req.body
-    for(let i = 0; i < questions.length; i++){
-        if(questions[i].quizId == quizID){
-            questions[i].questions.push({
-                id: Number(id),
-                question
-            })
-        }
-    }
-    res.json(questions)
+router.post('/', async (req, res) => {
+    const question = await Questions.create( req.body )
+    let quiz = await Quiz.findAll()
+    res.json(question)
 })
-
-router.get('/:quizID/:id', (req, res) => {
-    const { quizID, id } = req.params
-    questions.map((q) => {
-        if(q.quizId == quizID){
-            q.questions.map((question) => {
-                if(question.id == id){
-                    res.json(question)
-                }
-            })
-        }
+router.get('/:id', async (req, res) => {
+    const question = await Questions.findByPk( Number(req.params.id), {
+        include: Quiz
+    } )
+    res.json(question)
+})
+router.post('/:id', async (req, res) => {
+    let question = await Questions.update( req.body, {
+        where: { id: Number(req.params.id) }
     })
+    question = await Questions.findByPk( Number(req.params.id) )
+    res.json(question)
 })
-
-router.post('/:quizID/:id', (req, res) => {
-    const { quizID, id } = req.params
-
-    questions.map((q) => {
-        if(quizID == q.quizId){
-            q.questions.map((c) => {
-                if(id == c.id){
-                    c.question = req.body.question
-                    return c
-                }
-            })
-        }
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params
+    const deleted = await Questions.destroy({
+        where: { id }
     })
-    res.json(questions)
-})
-
-router.delete('/:quizID/:id', (req, res) => {
-    const quiz = req.params.quizID
-    const id = req.params.id
     
-    questions.map((q) => {
-        if(q.quizId == quiz){
-            q.questions.map((c) => {
-                if(c.id == id){
-                    const index = q.questions.indexOf(c)
-                    q.questions.splice(index, 1)
-                }
-            })
-        }
-    })
-
-    res.json(questions)
+    res.json(deleted)
 })
 
 module.exports = router

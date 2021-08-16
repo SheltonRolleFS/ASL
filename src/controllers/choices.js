@@ -1,87 +1,43 @@
 const express = require('express')
 const router = express.Router()
-const bodyParser = require('body-parser')
-router.use(bodyParser.urlencoded({ extended: false }))
-// let choices = require('../models/choices')
+const { Choices, Questions } = require('../models')
+const questions = require('../models/questions')
 
-router.get('/', (req, res) => {
-    res.json(choices)
-})
-
-router.post('/', (req, res) => {
-    const { quizID, questionID, id, choice } = req.body
-    choices.map((q) => {
-        if(quizID == q.quizId){
-            q.questions.map((question) => {
-                if(questionID == question.id){
-                    question.choices.push({
-                        id: Number(id),
-                        choice
-                    })
-                }
-            })
-        }
+router.get('/', async (req, res) => {
+    const choices = await Choices.findAll({
+        include: Questions
     })
     res.json(choices)
 })
 
-router.get('/:quizID/:questionID/:id', (req, res) => {
-    const { quizID, questionID, id } = req.params
-    choices.map((q) => {
-        if(quizID == q.quizId){
-            q.questions.map((question) => {
-                if(questionID == question.id){
-                    question.choices.map((c) => {
-                        if(c.id == id){
-                            res.json(c)
-                        }
-                    })
-                }
-            })
-        }
+router.post('/', async (req,res) => {
+    const choice = await Choices.create( req.body, {
+        include: Questions
     })
+    res.json(choice)
 })
 
-router.post('/:quizID/:questionID/:id', (req, res) => {
-    const newChoice = req.body.choice
-    const { quizID, questionID, id } = req.params
-
-    choices.map((q) => {
-        if(q.quizId == quizID){
-            q.questions.map((quesiton) => {
-                if(quesiton.id == questionID){
-                    quesiton.choices.map((c) => {
-                        if(c.id == id){
-                            c.answer = newChoice
-                        }
-                    })
-                }
-            })
-        }
+router.get('/:id', async (req, res) => {
+    const choice = await Choices.findByPk( Number(req.params.id), {
+        include: Questions
     })
-
-    res.json(choices)
+    res.json(choice)
 })
 
-router.delete('/:quizID/:questionID/:id', (req, res) => {
-    const { quizID, questionID, id } = req.params
+router.post('/:id', async (req, res) => {
+    let choice = await Choices.update( req.body, {
+        where: { id: Number(req.params.id) }
+    })
+    choice = await Choices.findByPk( Number(req.params.id) )
+    res.json(choice)
+})
 
-    choices.map((q) => {
-        if(q.quizId == quizID){
-            q.questions.map((question) => {
-                if(question.id == questionID){
-                    question.choices.map((c) => {
-                        if(c.id == id){
-                            const index = question.choices.indexOf(c)
-                            question.choices.splice(index, 1)
-                        }
-                    })
-                }
-            })
-        }
+router.delete('/:id', async (req, res) => {
+    const deleted = await Choices.destroy({
+        where: { id: req.params.id }
     })
 
-    res.json(choices)
+    res.json(deleted)
 })
 
 module.exports = router
