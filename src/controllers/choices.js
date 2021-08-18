@@ -6,7 +6,12 @@ router.get('/', async (req, res) => {
     const choices = await Choices.findAll({
         include: Questions
     })
-    res.render('choices/index', { choices })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(choices)
+    }else{
+        res.render('choices/index', { choices })
+    }
 })
 
 router.get('/new', (req, res) => {
@@ -17,14 +22,24 @@ router.post('/', async (req,res) => {
     const choice = await Choices.create( req.body, {
         include: Questions
     })
-    res.redirect('/choices/' + choice.id)
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(choice)
+    }else{
+        res.redirect('/choices/' + choice.id)
+    }
 })
 
 router.get('/:id', async (req, res) => {
     const choice = await Choices.findByPk( Number(req.params.id), {
         include: Questions
     })
-    res.render('choices/show', { choice })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(choice)
+    }else{
+        res.render('choices/show', { choice })
+    }
 })
 
 router.get('/:id/edit', async (req, res) => {
@@ -37,7 +52,12 @@ router.post('/:id', async (req, res) => {
         where: { id: Number(req.params.id) }
     })
     choice = await Choices.findByPk( Number(req.params.id) )
-    res.redirect('/choices/' + req.params.id)
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(choice)
+    }else{
+        res.redirect('/choices/' + req.params.id)
+    }
 })
 
 router.get('/:id/delete', async (req, res) => {
@@ -45,7 +65,12 @@ router.get('/:id/delete', async (req, res) => {
         where: { id: req.params.id }
     })
 
-    res.redirect('/choices')
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json({'success': true})
+    }else{
+        res.redirect('/choices')
+    }
+
 })
 
 module.exports = router
