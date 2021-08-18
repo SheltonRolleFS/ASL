@@ -11,8 +11,7 @@ app.set('views', __dirname + '/src/views')
 app.set('view engine', 'twig')
 
 app.get('/', async (req, res) => {
-    const quiz = await Quiz.findByPk(1)
-    res.render('home/home', { quiz })
+    res.render('home/home')
 })
 
 app.use('/quizzes', quizzesCtrl)

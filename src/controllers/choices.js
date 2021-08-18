@@ -1,27 +1,35 @@
 const express = require('express')
 const router = express.Router()
 const { Choices, Questions } = require('../models')
-const questions = require('../models/questions')
 
 router.get('/', async (req, res) => {
     const choices = await Choices.findAll({
         include: Questions
     })
-    res.json(choices)
+    res.render('choices/index', { choices })
+})
+
+router.get('/new', (req, res) => {
+    res.render('choices/create')
 })
 
 router.post('/', async (req,res) => {
     const choice = await Choices.create( req.body, {
         include: Questions
     })
-    res.json(choice)
+    res.redirect('/choices/' + choice.id)
 })
 
 router.get('/:id', async (req, res) => {
     const choice = await Choices.findByPk( Number(req.params.id), {
         include: Questions
     })
-    res.json(choice)
+    res.render('choices/show', { choice })
+})
+
+router.get('/:id/edit', async (req, res) => {
+    const choice = await Choices.findByPk(req.params.id)
+    res.render('choices/edit', { choice })
 })
 
 router.post('/:id', async (req, res) => {
@@ -29,15 +37,15 @@ router.post('/:id', async (req, res) => {
         where: { id: Number(req.params.id) }
     })
     choice = await Choices.findByPk( Number(req.params.id) )
-    res.json(choice)
+    res.redirect('/choices/' + req.params.id)
 })
 
-router.delete('/:id', async (req, res) => {
+router.get('/:id/delete', async (req, res) => {
     const deleted = await Choices.destroy({
         where: { id: req.params.id }
     })
 
-    res.json(deleted)
+    res.redirect('/choices')
 })
 
 module.exports = router

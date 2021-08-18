@@ -1,0 +1,23 @@
+{% extends "layouts/_default.twig" %}
+
+{% block main_content %}
+    <ul>
+        {% for choice in choices %}
+            <li>
+                {{ choice.choice }} - 
+                <a href="/choices/{{ choice.id }}/edit">Edit</a>
+                |
+                <a href="/choices/{{ choice.id }}/delete">Delete</a>
+                |
+                <a href="/choices/{{ choice.id }}">Show</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="/choices/new">Create New Choice</a>
+    </p>
+
+    <a href="/quizzes">View Quizzes</a>
+    |
+    <a href="/questions">View Questions</a>
+{% endblock %}
