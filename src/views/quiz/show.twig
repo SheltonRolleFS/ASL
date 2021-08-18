@@ -5,6 +5,12 @@
         <h1>{{ quiz.name }}</h1>
         <p><strong>ID: </strong>{{ quiz.id }}</p>
         <p><strong>Weight: </strong>{{ quiz.weight }}</p>
+        <p><strong>Questions: </strong></p>
+        <ul>
+            {% for question in quiz.Questions %}
+                <li><a href="/questions/{{ question.id }}">{{ question.question }}</a></li>
+            {% endfor %}
+        </ul>
         <p><strong>Created At: </strong>{{ quiz.createdAt }}</p>
         <p><strong>Updated Last: </strong>{{ quiz.updatedAt }}</p>
         <p>

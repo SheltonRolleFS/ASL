@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { Quiz } = require('../models')
+const { Quiz, Questions } = require('../models')
 
 router.get('/', async (req, res) => {
-    const quizzes = await Quiz.findAll()
+    const quizzes = await Quiz.findAll({
+        include: Questions
+    })
     if(req.headers.accept.indexOf('/json') > -1){
         res.json(quizzes)
     }else{
@@ -21,7 +23,7 @@ router.post('/', async (req, res) => {
     const quiz = await Quiz.create({
         name,
         weight: weight
-    })
+    }, { include: Questions })
 
     if(req.headers.accept.indexOf('/json') > -1){
         res.json(quiz)
@@ -31,7 +33,9 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const quiz = await Quiz.findByPk(req.params.id)
+    const quiz = await Quiz.findByPk( Number(req.params.id), {
+        include: Questions
+    })
 
     if(req.headers.accept.indexOf('/json') > -1){
         res.json(quiz)
