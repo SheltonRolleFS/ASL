@@ -4,7 +4,12 @@ const { Questions, Quiz } = require('../models')
 
 router.get('/', async (req, res) => {
     const questions = await Questions.findAll()
-    res.render('questions/index', { questions })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(questions)
+    }else{
+        res.render('questions/index', { questions })
+    }
 })
 
 router.get('/new', (req, res) => {
@@ -13,14 +18,24 @@ router.get('/new', (req, res) => {
 
 router.post('/', async (req, res) => {
     const question = await Questions.create( req.body )
-    res.redirect('/questions/' + question.id)
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(question)
+    }else{
+        res.redirect('/questions/' + question.id)
+    }
 })
 
 router.get('/:id', async (req, res) => {
     const question = await Questions.findByPk( Number(req.params.id), {
         include: Quiz
     } )
-    res.render('questions/show', { question })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(question)
+    }else{
+        res.render('questions/show', { question })
+    }
 })
 
 router.get('/:id/edit', async (req, res) => {
@@ -33,7 +48,12 @@ router.post('/:id', async (req, res) => {
         where: { id: Number(req.params.id) }
     })
     question = await Questions.findByPk( Number(req.params.id) )
-    res.redirect('/questions/' + req.params.id)
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(question)
+    }else{
+        res.redirect('/questions/' + req.params.id)
+    }
 })
 
 router.get('/:id/delete', async (req, res) => {
@@ -41,8 +61,13 @@ router.get('/:id/delete', async (req, res) => {
     const deleted = await Questions.destroy({
         where: { id }
     })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json({ 'success': true })
+    }else{
+        res.redirect('/questions')
+    }
     
-    res.redirect('/questions')
 })
 
 module.exports = router

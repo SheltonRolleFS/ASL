@@ -1,10 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const { Quiz } = require('../models')
+const { Quiz, Questions } = require('../models')
 
 router.get('/', async (req, res) => {
-    const quizzes = await Quiz.findAll()
-    res.render('quiz/index', { quizzes })
+    const quizzes = await Quiz.findAll({
+        include: Questions
+    })
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(quizzes)
+    }else{
+        res.render('quiz/index', { quizzes })
+    }
 })
 
 router.get('/new', (req, res) => {
@@ -17,13 +23,25 @@ router.post('/', async (req, res) => {
     const quiz = await Quiz.create({
         name,
         weight: weight
-    })
-    res.redirect('/quizzes/' + quiz.id)
+    }, { include: Questions })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(quiz)
+    }else{
+        res.redirect('/quizzes/' + quiz.id)
+    }
 })
 
 router.get('/:id', async (req, res) => {
-    const quiz = await Quiz.findByPk(req.params.id)
-    res.render('quiz/show', { quiz })
+    const quiz = await Quiz.findByPk( Number(req.params.id), {
+        include: Questions
+    })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(quiz)
+    }else{
+        res.render('quiz/show', { quiz })
+    }
 })
 
 router.get('/:id/edit', async (req, res) => {
@@ -36,7 +54,12 @@ router.post('/:id', async (req, res) => {
     const quiz = await Quiz.update( req.body, {
         where: { id }
     })
-    res.redirect('/quizzes/' + id)
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json(quiz)
+    }else{
+        res.redirect('/quizzes/' + id)
+    }
 })
 
 router.get('/:id/delete', async (req, res) => {
@@ -44,8 +67,13 @@ router.get('/:id/delete', async (req, res) => {
     const deleted = await Quiz.destroy({
         where: { id }
     })
+
+    if(req.headers.accept.indexOf('/json') > -1){
+        res.json({'success': true})
+    }else{
+        res.redirect('/quizzes')
+    }
     
-    res.redirect('/quizzes')
 })
 
 module.exports = router

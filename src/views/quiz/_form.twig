@@ -11,7 +11,14 @@
             {% else %}
                 <input type="text" id="name" name="name" />
             {% endif %}
-            
+        </div>
+        <div>
+            <label for="weight">Weight: </label>
+            {% if quiz %}
+                <input type="number" id="weight" name="weight" value="{{ quiz.weight }}" />
+            {% else %}
+                <input type="number" id="weight" name="weight" />
+            {% endif %}
         </div>
 
         <input type="submit" value="Save Quiz" />
