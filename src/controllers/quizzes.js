@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const { Quiz, Questions } = require('../models')
+const { isAuthenticated } = require('../middlewares/auth')
 
-router.get('/', async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     const quizzes = await Quiz.findAll({
         include: Questions
     })
@@ -13,11 +14,11 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/new', (req, res) => {
+router.get('/new', isAuthenticated, (req, res) => {
     res.render('quiz/create')
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     const name = req.body.name
     const weight = Number(req.body.weight)
     const quiz = await Quiz.create({
@@ -32,7 +33,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
     const quiz = await Quiz.findByPk( Number(req.params.id), {
         include: Questions
     })
@@ -44,12 +45,12 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', isAuthenticated, async (req, res) => {
     const quiz = await Quiz.findByPk(req.params.id)
     res.render('quiz/edit', { quiz })
 })
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params
     const quiz = await Quiz.update( req.body, {
         where: { id }
@@ -62,7 +63,7 @@ router.post('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/delete', async (req, res) => {
+router.get('/:id/delete', isAuthenticated, async (req, res) => {
     const { id } = req.params
     const deleted = await Quiz.destroy({
         where: { id }

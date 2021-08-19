@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const { Questions, Quiz } = require('../models')
+const { isAuthenticated } = require('../middlewares/auth')
 
-router.get('/', async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     const questions = await Questions.findAll()
 
     if(req.headers.accept.indexOf('/json') > -1){
@@ -12,11 +13,11 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/new', (req, res) => {
+router.get('/new', isAuthenticated, (req, res) => {
     res.render('questions/create')
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     const question = await Questions.create( req.body )
 
     if(req.headers.accept.indexOf('/json') > -1){
@@ -26,7 +27,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
     const question = await Questions.findByPk( Number(req.params.id), {
         include: Quiz
     } )
@@ -38,12 +39,12 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', isAuthenticated, async (req, res) => {
     const question = await Questions.findByPk(req.params.id)
     res.render('questions/edit', { question })
 })
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', isAuthenticated, async (req, res) => {
     let question = await Questions.update( req.body, {
         where: { id: Number(req.params.id) }
     })
@@ -56,7 +57,7 @@ router.post('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/delete', async (req, res) => {
+router.get('/:id/delete', isAuthenticated, async (req, res) => {
     const { id } = req.params
     const deleted = await Questions.destroy({
         where: { id }

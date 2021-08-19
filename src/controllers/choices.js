@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const { Choices, Questions } = require('../models')
+const { isAuthenticated } = require('../middlewares/auth')
 
-router.get('/', async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     const choices = await Choices.findAll({
         include: Questions
     })
@@ -14,11 +15,11 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/new', (req, res) => {
+router.get('/new', isAuthenticated, (req, res) => {
     res.render('choices/create')
 })
 
-router.post('/', async (req,res) => {
+router.post('/', isAuthenticated, async (req,res) => {
     const choice = await Choices.create( req.body, {
         include: Questions
     })
@@ -30,7 +31,7 @@ router.post('/', async (req,res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
     const choice = await Choices.findByPk( Number(req.params.id), {
         include: Questions
     })
@@ -42,12 +43,12 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', isAuthenticated, async (req, res) => {
     const choice = await Choices.findByPk(req.params.id)
     res.render('choices/edit', { choice })
 })
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', isAuthenticated, async (req, res) => {
     let choice = await Choices.update( req.body, {
         where: { id: Number(req.params.id) }
     })
@@ -60,7 +61,7 @@ router.post('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/delete', async (req, res) => {
+router.get('/:id/delete', isAuthenticated, async (req, res) => {
     const deleted = await Choices.destroy({
         where: { id: req.params.id }
     })
