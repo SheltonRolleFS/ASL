@@ -1,5 +1,13 @@
 {% extends "layouts/_default.twig" %}
 
 {% block main_content %}
+    {% if errors %}
+        <ul>
+            {% for e in errors %}
+                <li>{{ e }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
     {% include "quiz/_form.twig", with { quiz: quiz } %}
 {% endblock %}

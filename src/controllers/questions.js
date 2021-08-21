@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Questions, Quiz } = require('../models')
 const { isAuthenticated } = require('../middlewares/auth')
+const { questionIsValid } = require('../middlewares/forms')
 
 router.get('/', isAuthenticated, async (req, res) => {
     const questions = await Questions.findAll()
@@ -17,13 +18,16 @@ router.get('/new', isAuthenticated, (req, res) => {
     res.render('questions/create')
 })
 
-router.post('/', isAuthenticated, async (req, res) => {
-    const question = await Questions.create( req.body )
-
-    if(req.headers.accept.indexOf('/json') > -1){
-        res.json(question)
+router.post('/', isAuthenticated, questionIsValid, async (req, res) => {
+    if(req.errors.length > 0){
+        res.render('questions/create', { errors: req.errors })
     }else{
-        res.redirect('/questions/' + question.id)
+        const question = await Questions.create( req.body )
+        if(req.headers.accept.indexOf('/json') > -1){
+            res.json(question)
+        }else{
+            res.redirect('/questions/' + question.id)
+        }
     }
 })
 
@@ -44,16 +48,21 @@ router.get('/:id/edit', isAuthenticated, async (req, res) => {
     res.render('questions/edit', { question })
 })
 
-router.post('/:id', isAuthenticated, async (req, res) => {
-    let question = await Questions.update( req.body, {
-        where: { id: Number(req.params.id) }
-    })
-    question = await Questions.findByPk( Number(req.params.id) )
-
-    if(req.headers.accept.indexOf('/json') > -1){
-        res.json(question)
+router.post('/:id', isAuthenticated, questionIsValid, async (req, res) => {
+    if(req.errors.length > 0){
+        const question = await Questions.findByPk( Number(req.params.id) )
+        res.render('questions/edit', { errors: req.errors, question })
     }else{
-        res.redirect('/questions/' + req.params.id)
+        let question = await Questions.update( req.body, {
+            where: { id: Number(req.params.id) }
+        })
+        question = await Questions.findByPk( Number(req.params.id) )
+    
+        if(req.headers.accept.indexOf('/json') > -1){
+            res.json(question)
+        }else{
+            res.redirect('/questions/' + req.params.id)
+        }
     }
 })
 
