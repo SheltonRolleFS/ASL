@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Choices, Questions } = require('../models')
 const { isAuthenticated } = require('../middlewares/auth')
+const { choiceIsValid } = require('../middlewares/forms')
 
 router.get('/', isAuthenticated, async (req, res) => {
     const choices = await Choices.findAll({
@@ -19,15 +20,19 @@ router.get('/new', isAuthenticated, (req, res) => {
     res.render('choices/create')
 })
 
-router.post('/', isAuthenticated, async (req,res) => {
-    const choice = await Choices.create( req.body, {
-        include: Questions
-    })
-
-    if(req.headers.accept.indexOf('/json') > -1){
-        res.json(choice)
+router.post('/', isAuthenticated, choiceIsValid, async (req,res) => {
+    if(req.errors.length > 0){
+        res.render('choices/create', { errors: req.errors })
     }else{
-        res.redirect('/choices/' + choice.id)
+        const choice = await Choices.create( req.body, {
+            include: Questions
+        })
+    
+        if(req.headers.accept.indexOf('/json') > -1){
+            res.json(choice)
+        }else{
+            res.redirect('/choices/' + choice.id)
+        }
     }
 })
 
@@ -48,16 +53,21 @@ router.get('/:id/edit', isAuthenticated, async (req, res) => {
     res.render('choices/edit', { choice })
 })
 
-router.post('/:id', isAuthenticated, async (req, res) => {
-    let choice = await Choices.update( req.body, {
-        where: { id: Number(req.params.id) }
-    })
-    choice = await Choices.findByPk( Number(req.params.id) )
-
-    if(req.headers.accept.indexOf('/json') > -1){
-        res.json(choice)
+router.post('/:id', isAuthenticated, choiceIsValid, async (req, res) => {
+    if(req.errors.length > 0){
+        const choice = await Choices.findByPk( Number(req.params.id) )
+        res.render('choices/edit', { errors: req.errors, choice })
     }else{
-        res.redirect('/choices/' + req.params.id)
+        let choice = await Choices.update( req.body, {
+            where: { id: Number(req.params.id) }
+        })
+        choice = await Choices.findByPk( Number(req.params.id) )
+    
+        if(req.headers.accept.indexOf('/json') > -1){
+            res.json(choice)
+        }else{
+            res.redirect('/choices/' + req.params.id)
+        }
     }
 })
 
