@@ -1,5 +1,3 @@
-const { Quiz } = require('../models')
-
 const quizIsValid = (req, res, next) => {
     const { name, weight } = req.body
     req.errors = []
