@@ -5,6 +5,8 @@ const quizzesCtrl = require('./src/controllers/quizzes')
 const questionsCtrl = require('./src/controllers/questions')
 const choicesCtrl = require('./src/controllers/choices')
 const authCtrl = require('./src/controllers/auth')
+const cors = require('cors')
+app.use(cors())
 
 const session = require('express-session')
 app.use(session({
@@ -28,4 +30,4 @@ app.use('/questions', questionsCtrl)
 app.use('/choices', choicesCtrl)
 app.use('/auth', authCtrl)
 
-app.listen(3000)
+app.listen(3001)
