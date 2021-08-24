@@ -12,7 +12,7 @@ function Quizzes() {
         const opts = {
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
+                Accept: 'application/json'
             }
         }
         fetch('http://localhost:3001/quizzes', opts)

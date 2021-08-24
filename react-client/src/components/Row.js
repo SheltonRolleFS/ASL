@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineExpandAlt } from 'react-icons/ai'
 
 const Row = ({ quiz, question, choice, rowType }) => {
-    if(quiz.name !== ''){
+    if(typeof(quiz) !== 'undefined'){
         return (
             <div className={`quiz-row ${rowType}`}>
                 <div className="name">
@@ -26,10 +26,28 @@ const Row = ({ quiz, question, choice, rowType }) => {
                 <p>{quiz.createdAt}</p>
             </div>
         )
-    }else if(question.question !== ''){
+    }else if(typeof(question) !== 'undefined'){
         return (
-            <div className="question-row">
-                <h1>{question.name}</h1>
+            <div className={`question-row ${rowType}`}>
+                <div className="name">
+                    <p>{question.question}</p>
+
+                    <div className="links">
+                        <Link to={`questions/${question.id}/delete`}>
+                            <AiOutlineDelete />
+                        </Link>
+                        <Link to={`questions/${question.id}/edit`}>
+                            <AiOutlineEdit />
+                        </Link>
+                        <Link to={`questions/${question.id}/show`}>
+                            <AiOutlineExpandAlt />
+                        </Link>
+                    </div>
+                </div>
+
+                <p>{question.id}</p>
+                <p>{question.QuizId}</p>
+                <p>{question.createdAt}</p>
             </div>
         )
     }else{
