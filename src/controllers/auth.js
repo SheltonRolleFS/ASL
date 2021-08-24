@@ -19,7 +19,7 @@ router.get('/callback', async (req, res) => {
     }, async (err, response, body) => {
         const { access_token } = querystring.parse(body)  
         req.session.access_token = access_token
-        res.redirect('http://localhost:3000/home?access_token=' + access_token)
+        res.redirect('http://localhost:3000/callback?access_token=' + access_token)
     })
 })
 

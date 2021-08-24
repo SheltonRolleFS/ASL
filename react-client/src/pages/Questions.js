@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Row from '../components/Row'
 
-function Questions() {
+function Questions({ loggedIn }) {
     const [questions, setQuestions] = useState([])
 
     useEffect(() => {
@@ -25,39 +25,45 @@ function Questions() {
     }, [])
 
     
-    return (
-        <div className="index">
-            <Header />
-            <section className="content container">
-
-                <div className="heading">
-                    <div className="heading__text">
-                        <h1>Questions</h1>
-                        <p>Here are all the questions in the API</p>
+    if(loggedIn){
+        return (
+            <div className="index">
+                <Header />
+                <section className="content container">
+    
+                    <div className="heading">
+                        <div className="heading__text">
+                            <h1>Questions</h1>
+                            <p>Here are all the questions in the API</p>
+                        </div>
+                        <Link to="/questions/new">Create Quiz</Link>
                     </div>
-                    <Link to="/questions/new">Create Quiz</Link>
-                </div>
-
-                <div className="question-table-header">
-                    <h2>Question</h2>
-                    <h2>ID</h2>
-                    <h2>QuizID</h2>
-                    <h2>Date Created</h2>
-                </div>
-
-                {questions.map((q) => {
-                    let rowType
-                    let idType = Number(q.id) % 2
-                    if(idType === 0){
-                        rowType = 'even-row'
-                    }else{
-                        rowType = 'odd-row'
-                    }
-                    return <Row key={q.id} rowType={rowType} question={q}/>
-                })}
-            </section>
-        </div>
-    )
+    
+                    <div className="question-table-header">
+                        <h2>Question</h2>
+                        <h2>ID</h2>
+                        <h2>QuizID</h2>
+                        <h2>Date Created</h2>
+                    </div>
+    
+                    {questions.map((q) => {
+                        let rowType
+                        let idType = Number(q.id) % 2
+                        if(idType === 0){
+                            rowType = 'even-row'
+                        }else{
+                            rowType = 'odd-row'
+                        }
+                        return <Row key={q.id} rowType={rowType} question={q}/>
+                    })}
+                </section>
+            </div>
+        )
+    }else{
+        return (
+            <h1>Not Logged In!</h1>
+        )
+    }
 }
 
 export default Questions
