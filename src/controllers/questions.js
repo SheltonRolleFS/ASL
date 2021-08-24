@@ -4,7 +4,7 @@ const { Questions, Quiz } = require('../models')
 const { isAuthenticated } = require('../middlewares/auth')
 const { questionIsValid } = require('../middlewares/forms')
 
-router.get('/', isAuthenticated, async (req, res) => {
+router.get('/', async (req, res) => {
     const questions = await Questions.findAll()
 
     if(req.headers.accept.indexOf('/json') > -1){
@@ -14,11 +14,11 @@ router.get('/', isAuthenticated, async (req, res) => {
     }
 })
 
-router.get('/new', isAuthenticated, (req, res) => {
+router.get('/new', (req, res) => {
     res.render('questions/create')
 })
 
-router.post('/', isAuthenticated, questionIsValid, async (req, res) => {
+router.post('/', questionIsValid, async (req, res) => {
     if(req.errors.length > 0){
         res.render('questions/create', { errors: req.errors })
     }else{
@@ -31,7 +31,7 @@ router.post('/', isAuthenticated, questionIsValid, async (req, res) => {
     }
 })
 
-router.get('/:id', isAuthenticated, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const question = await Questions.findByPk( Number(req.params.id), {
         include: Quiz
     } )
@@ -43,12 +43,12 @@ router.get('/:id', isAuthenticated, async (req, res) => {
     }
 })
 
-router.get('/:id/edit', isAuthenticated, async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
     const question = await Questions.findByPk(req.params.id)
     res.render('questions/edit', { question })
 })
 
-router.post('/:id', isAuthenticated, questionIsValid, async (req, res) => {
+router.post('/:id', questionIsValid, async (req, res) => {
     if(req.errors.length > 0){
         const question = await Questions.findByPk( Number(req.params.id) )
         res.render('questions/edit', { errors: req.errors, question })
@@ -66,7 +66,7 @@ router.post('/:id', isAuthenticated, questionIsValid, async (req, res) => {
     }
 })
 
-router.get('/:id/delete', isAuthenticated, async (req, res) => {
+router.get('/:id/delete', async (req, res) => {
     const { id } = req.params
     const deleted = await Questions.destroy({
         where: { id }
