@@ -4,7 +4,7 @@ const { Quiz, Questions } = require('../models')
 const { isAuthenticated } = require('../middlewares/auth')
 const { quizIsValid } = require('../middlewares/forms')
 
-router.get('/', isAuthenticated, async (req, res) => {
+router.get('/', async (req, res) => {
     const quizzes = await Quiz.findAll({
         include: Questions
     })
@@ -15,11 +15,11 @@ router.get('/', isAuthenticated, async (req, res) => {
     }
 })
 
-router.get('/new', isAuthenticated, (req, res) => {
+router.get('/new', (req, res) => {
     res.render('quiz/create')
 })
 
-router.post('/', isAuthenticated, quizIsValid, async (req, res) => {
+router.post('/', quizIsValid, async (req, res) => {
     if(req.errors.length > 0){
         res.render('quiz/create', { errors: req.errors })
     }else{
@@ -38,7 +38,7 @@ router.post('/', isAuthenticated, quizIsValid, async (req, res) => {
     }
 })
 
-router.get('/:id', isAuthenticated, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const quiz = await Quiz.findByPk( Number(req.params.id), {
         include: Questions
     })
@@ -50,12 +50,12 @@ router.get('/:id', isAuthenticated, async (req, res) => {
     }
 })
 
-router.get('/:id/edit', isAuthenticated, async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
     const quiz = await Quiz.findByPk(req.params.id)
     res.render('quiz/edit', { quiz })
 })
 
-router.post('/:id', isAuthenticated, quizIsValid, async (req, res) => {
+router.post('/:id', quizIsValid, async (req, res) => {
     if(req.errors.length > 0){
         const quiz = await Quiz.findByPk( Number(req.params.id) )
         res.render('quiz/edit', { errors: req.errors, quiz })
@@ -73,7 +73,7 @@ router.post('/:id', isAuthenticated, quizIsValid, async (req, res) => {
     }
 })
 
-router.get('/:id/delete', isAuthenticated, async (req, res) => {
+router.get('/:id/delete', async (req, res) => {
     const { id } = req.params
     const deleted = await Quiz.destroy({
         where: { id }
