@@ -35,7 +35,7 @@ function Questions() {
                         <h1>Questions</h1>
                         <p>Here are all the questions in the API</p>
                     </div>
-                    <Link to="/questions/new">Create Quiz</Link>
+                    <Link to="/questions/new">Create Question</Link>
                 </div>
 
                 <div className="question-table-header">

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 // Import Pages
+import Login from './pages/Login'
 import Home from './pages/Home'
 import Quizzes from './pages/Quizzes'
 import Questions from './pages/Questions'
@@ -12,7 +13,7 @@ function App() {
       
       <Switch>
         <Route path='/' exact>
-          <a href='https://github.com/login/oauth/authorize?client_id=d5895cc0b46eefc0976a'>Login</a>
+          <Login />
         </Route>
         <Route path='/home' exact >
           <Home />
