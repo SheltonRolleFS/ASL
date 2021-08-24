@@ -52,8 +52,27 @@ const Row = ({ quiz, question, choice, rowType }) => {
         )
     }else{
         return (
-            <div className="choice-row">
-                <h1>{choice.choice}</h1>
+            <div className={`choice-row ${rowType}`}>
+                <div className="name">
+                    <p>{choice.choice}</p>
+
+                    <div className="links">
+                        <Link to={`choices/${choice.id}/delete`}>
+                            <AiOutlineDelete />
+                        </Link>
+                        <Link to={`choices/${choice.id}/edit`}>
+                            <AiOutlineEdit />
+                        </Link>
+                        <Link to={`choices/${choice.id}/show`}>
+                            <AiOutlineExpandAlt />
+                        </Link>
+                    </div>
+                </div>
+
+                <p>{choice.id}</p>
+                <p>{choice.QuestionId}</p>
+                <p>{choice.Question.question}</p>
+                <p>{choice.createdAt}</p>
             </div>
         )
     }

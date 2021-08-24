@@ -24,7 +24,7 @@ function Quizzes() {
 
     
     return (
-        <div className="quiz-page">
+        <div className="index">
             <Header />
 
             <section className="content container">
@@ -36,7 +36,7 @@ function Quizzes() {
                     <Link to="/quizzes/new">Create Quiz</Link>
                 </div>
 
-                <div className="table-header">
+                <div className="quiz-table-header">
                     <h2>Quiz Name</h2>
                     <h2>Weight</h2>
                     <h2>ID</h2>
