@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineExpandAlt } from 'react-icons/ai'
 
 const Row = ({ quiz, question, choice, rowType }) => {
     if(quiz.name !== ''){
@@ -9,8 +9,14 @@ const Row = ({ quiz, question, choice, rowType }) => {
                     <p>{quiz.name}</p>
 
                     <div className="links">
-                        <Link to={`${quiz.id}/delete`}>
+                        <Link to={`quizzes/${quiz.id}/delete`}>
                             <AiOutlineDelete />
+                        </Link>
+                        <Link to={`quizzes/${quiz.id}/edit`}>
+                            <AiOutlineEdit />
+                        </Link>
+                        <Link to={`quizzes/${quiz.id}/show`}>
+                            <AiOutlineExpandAlt />
                         </Link>
                     </div>
                 </div>

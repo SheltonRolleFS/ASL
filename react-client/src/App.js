@@ -17,13 +17,13 @@ function App() {
         <Route path='/home' exact >
           <Home />
         </Route>
-        <Route path='/quizzes' >
+        <Route path='/quizzes' exact >
           <Quizzes />
         </Route>
-        <Route path='/questions'>
+        <Route path='/questions' exact >
           <Questions />
         </Route>
-        <Route path='/choices'>
+        <Route path='/choices' exact >
           <Choices />
         </Route>
       </Switch>

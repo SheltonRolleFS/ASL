@@ -143,6 +143,29 @@
                 p{
                     border: none;
                 }
+
+                .links{
+                    a{
+                        padding: .25rem;
+                        transition: all 150ms ease-in;
+                    }
+
+                    a:hover{
+                        
+                        svg{
+                            transform: scale(1.15);
+                        }
+
+                    }
+
+                    a:nth-of-type(1){
+                        color: #524B4B;
+                    }
+
+                    a:nth-of-type(2){
+                        color: #C84CA5;
+                    }
+                }
             }
 
             
