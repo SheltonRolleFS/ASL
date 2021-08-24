@@ -24,10 +24,10 @@ function Quizzes() {
 
     
     return (
-        <>
+        <div className="quiz-page">
             <Header />
 
-            <section className="content">
+            <section className="content container">
                 <div className="heading">
                     <div className="heading__text">
                         <h1>Quizzes</h1>
@@ -44,10 +44,17 @@ function Quizzes() {
                     <h2>Date Created</h2>
                 </div>
                 {quizzes.map((q) => {
-                    return <Row key={q.id} quiz={q}/>
+                    let rowType
+                    let idType = Number(q.id) % 2
+                    if(idType === 0){
+                        rowType = 'even-row'
+                    }else{
+                        rowType = 'odd-row'
+                    }
+                    return <Row key={q.id} rowType={rowType} quiz={q}/>
                 })}
             </section>
-        </>
+        </div>
     )
 }
 
