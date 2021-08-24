@@ -3,43 +3,6 @@
     height: 100vh;
     display: flex;
 
-    header{
-        background-color: $primary-color;
-        width: 170px;
-        padding: 48px 20px 0;
-
-        nav{
-            height: 30%;
-
-            ul{
-                list-style: none;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-
-                a{
-                    text-align: center;
-                    text-decoration: none;
-                    border-radius: 1rem;
-                    transition: all 150ms ease-in;
-                    
-                    li{
-                        font-family: 'Poppins', sans-serif;
-                        // border: 1px solid white;
-                        padding: .5rem;
-                        color: white;
-                        font-size: 2.4rem;
-                    }
-                }
-
-                a:hover{
-                    background-color: #E75555;
-                }
-            }
-        }
-    }
-
     .content{
         padding: 90px 90px 0 90px;
         width: 100%;
