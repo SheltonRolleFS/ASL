@@ -5,9 +5,9 @@ const Header = () => {
         <header>
             <nav>
                 <ul>
-                    <li><Link to='/quizzes'>Quizzes</Link></li>
-                    <li><Link to='/questions'>Questions</Link></li>
-                    <li><Link to='/choices'>Choices</Link></li>
+                    <Link to='/quizzes'><li>Quizzes</li></Link>
+                    <Link to='/questions'><li>Questions</li></Link>
+                    <Link to='/choices'><li>Choices</li></Link>
                 </ul>
             </nav>
         </header>
