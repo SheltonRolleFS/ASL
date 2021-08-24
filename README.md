@@ -45,7 +45,9 @@ In the fourth and final week, we used all of our new-found knowledge, and knowle
 that has ReactJS as it's front end and ExpressJS as it's backend. I first started by making some high-fidelity wireframes to get an idea of what I wanted 
 the application to look like.
 
-[* INSERT IMAGES HERE *]
+![Index Route View](./design/index-view.png)
+![Specific Item Route View](./design/item-view.png)
+![Create Route View](./design/create-view.png)
 
 Once the wireframes were done it was time to start building the React app. In this React app I made use of hooks and React Router Dom to deal with routing
 and fetching / saving data from the API.
