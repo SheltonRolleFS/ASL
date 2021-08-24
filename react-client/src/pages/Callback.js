@@ -1,11 +1,12 @@
 import { useLocation, Redirect } from 'react-router-dom'
 import querystring from 'query-string'
 
-function Home() {
+function Callback({ checkAccess }) {
     const { search } = useLocation()
     const { access_token } = querystring.parse(search)
 
     if(access_token !== ''){
+        checkAccess(access_token)
         return <Redirect to='/quizzes' />
     }
 
@@ -17,4 +18,4 @@ function Home() {
     )
 }
 
-export default Home
+export default Callback
