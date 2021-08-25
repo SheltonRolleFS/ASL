@@ -29,7 +29,7 @@ function Questions({ loggedIn }) {
     if(loggedIn){
         return (
             <div className="index">
-                <Header />
+                <Header active="question"/>
                 <section className="content container">
     
                     <div className="heading">
