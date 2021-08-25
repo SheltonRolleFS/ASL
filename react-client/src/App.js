@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import React from 'react'
 
 // Import Pages
@@ -43,7 +43,7 @@ class App extends React.Component {
         
         <Switch>
           <Route path='/' exact>
-            <Login />
+            {localStorage.getItem('username') !== 'null' ? <Redirect to="/quizzes"/> : <Login />}
           </Route>
           <Route path='/callback' exact >
             <Callback checkAccess={this.checkAccess} />
