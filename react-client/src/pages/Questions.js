@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { IoIosArrowBack } from 'react-icons/io'
 
 // Component Imports
 import Header from '../components/Header'
@@ -61,7 +62,16 @@ function Questions({ loggedIn }) {
         )
     }else{
         return (
-            <h1>Not Logged In!</h1>
+            <div className="no-access-error">
+                <div className="content">
+                    <a href="/">
+                        <IoIosArrowBack />
+                        Go Back
+                    </a>
+                    <h1>Halt! You've Violated the Law!</h1>
+                    <p>You have to sign in with GitHub before you can view this data.</p>
+                </div>
+            </div>
         )
     }
 }
