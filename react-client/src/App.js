@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import React from 'react'
 
 // Import Pages
@@ -12,15 +12,28 @@ class App extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = {
-      loggedIn: false
-    }
+    // this.state = {
+    //   loggedIn: false
+    // }
   }
 
-  checkAccess = ( access_token ) => {
+  checkAccess = async ( access_token ) => {
     if(typeof(access_token) !== 'undefined'){
-      console.log(access_token)
-      this.setState({ loggedIn: true })
+      // this.setState({ loggedIn: true })
+
+      const opts = {
+        method: 'GET',
+        headers: {
+          Authorization: `token ${access_token}`
+        }
+      }
+
+      await fetch('https://api.github.com/user', opts)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        localStorage.setItem('username', data.login)
+      })
     }
   }
 
@@ -30,19 +43,22 @@ class App extends React.Component {
         
         <Switch>
           <Route path='/' exact>
-            <Login loggedIn={this.state.loggedIn} />
+            {localStorage.getItem('username') !== 'null' ? <Redirect to="/quizzes"/> : <Login />}
           </Route>
           <Route path='/callback' exact >
             <Callback checkAccess={this.checkAccess} />
           </Route>
           <Route path='/quizzes' exact >
-            <Quizzes loggedIn={this.state.loggedIn}/>
+            {/* <Quizzes loggedIn={this.state.loggedIn}/> */}
+            <Quizzes />
           </Route>
           <Route path='/questions' exact >
-            <Questions loggedIn={this.state.loggedIn} />
+            {/* <Questions loggedIn={this.state.loggedIn} /> */}
+            <Questions />
           </Route>
           <Route path='/choices' exact >
-            <Choices loggedIn={this.state.loggedIn} />
+            {/* <Choices loggedIn={this.state.loggedIn} /> */}
+            <Choices />
           </Route>
         </Switch>
       </Router>
