@@ -19,6 +19,10 @@ header{
                 text-decoration: none;
                 border-radius: 1rem;
                 transition: all 150ms ease-in;
+
+                .active{
+                    background-color: #E75555;
+                }
                 
                 li{
                     font-family: 'Poppins', sans-serif;

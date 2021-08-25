@@ -27,7 +27,7 @@ function Choices({ loggedIn }) {
     if(loggedIn){
         return (
             <div className="index">
-                <Header />
+                <Header  active="choice"/>
     
                 <section className="content container">
                     <div className="heading">

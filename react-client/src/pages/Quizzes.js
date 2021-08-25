@@ -27,7 +27,7 @@ function Quizzes({ loggedIn }) {
     if(loggedIn){
         return (
             <div className="index">
-                <Header />
+                <Header active="quiz"/>
     
                 <section className="content container">
                     <div className="heading">
