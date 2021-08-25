@@ -1,8 +1,6 @@
 import React from 'react'
 
-const Login = ({ loggedIn }) => {
-    console.log(loggedIn)
-    
+const Login = () => {
     return (
         <>
             <div id="link-container">
