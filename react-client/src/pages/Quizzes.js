@@ -6,26 +6,23 @@ import { IoIosArrowBack } from 'react-icons/io'
 import Header from '../components/Header'
 import Row from '../components/Row'
 
-function Quizzes() {
-    const [loggedIn, setLoggedIn] = useState(false)
+function Quizzes({ loggedIn }) {
     const [quizzes, setQuizzes] = useState([])
 
     useEffect(() => {
-        if(localStorage.getItem('username') !== 'null'){
-            setLoggedIn(true)
 
-            const opts = {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json'
-                }
+        const opts = {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json'
             }
-            fetch('http://localhost:3001/quizzes', opts)
-            .then(res => res.json())
-            .then(data => {
-                setQuizzes(data)
-            })
         }
+        fetch('http://localhost:3001/quizzes', opts)
+        .then(res => res.json())
+        .then(data => {
+            setQuizzes(data)
+        })
+
     }, [])
 
     

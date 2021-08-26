@@ -1,6 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 const Header = ({ active }) => {
+    function logout(){
+        sessionStorage.removeItem('username')
+        return <Redirect to="/"/>
+    }
+
     return (
         <header>
             <nav>
@@ -15,6 +20,8 @@ const Header = ({ active }) => {
                         {active === 'choice' ? <li className="active">Choices</li> : <li>Choices</li>}
                     </Link>
                 </ul>
+
+                <button onClick={() => logout()}>Logout</button>
             </nav>
         </header>
     )

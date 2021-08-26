@@ -11,7 +11,7 @@ function Choices() {
     const [choices, setChoices] = useState([])
 
     useEffect(() => {
-        if(localStorage.getItem('username') !== 'null'){
+        if(sessionStorage.getItem('username') !== null){
             setLoggedIn(true)
 
             const opts = {
