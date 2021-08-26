@@ -22,7 +22,7 @@ router.get('/new', (req, res) => {
 
 router.post('/', choiceIsValid, async (req,res) => {
     if(req.errors.length > 0){
-        res.render('choices/create', { errors: req.errors })
+        res.redirect('http://localhost:3000/choices/new')
     }else{
         const choice = await Choices.create( req.body, {
             include: Questions
@@ -31,7 +31,7 @@ router.post('/', choiceIsValid, async (req,res) => {
         if(req.headers.accept.indexOf('/json') > -1){
             res.json(choice)
         }else{
-            res.redirect('/choices/' + choice.id)
+            res.redirect('http://localhost:3000/choices')
         }
     }
 })

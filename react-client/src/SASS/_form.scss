@@ -1,0 +1,105 @@
+.create-form{
+    display: flex;
+    background: $form-background-color;
+
+    .content{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+
+        h1{
+            font-family: 'Roboto', sans-serif;
+            font-size: 4.8rem;
+            font-style: italic;
+            color: $headings;
+        }
+
+        p{
+            font-size: 1.2rem;
+            color: rgb(63, 63, 63);
+        }
+
+        form{
+            border-top: 1px solid gray;
+            margin-top: 2rem;
+            padding-top: 2rem;
+
+            .form-field{
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 2rem;
+
+                label{
+                    font-size: 2.4rem;
+                    font-style: italic;
+                    font-family: 'Poppins', sans-serif;
+                }
+
+                input{
+                    padding: 1rem;
+                    font-size: 1.8rem;
+                    border: 1px solid gray;
+                }
+
+                #quiz-weight{
+                    width: 25%;
+                    text-align: center;
+                }
+
+                input::placeholder{
+                    font-size: 1.8rem;
+                    font-family: 'Poppins', sans-serif;
+                    color: rgb(173, 171, 171);
+                }
+
+                select{
+                    padding: 1rem;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 1.8rem;
+                }
+            }
+
+
+
+            .buttons{
+                margin-top: 4rem;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+
+                .save-btn,
+                a{
+                    font-family: 'Poppins', sans-serif;
+                    padding: 1rem 2rem;
+                    font-size: 2rem;
+                    border-radius: 1rem;
+                    border: 2px solid $form-button-color;
+                    cursor: pointer;
+                    transition: all 150ms ease-in;
+                }
+
+                .save-btn{
+                    margin-right: 2rem;
+                    background-color: $form-button-color;
+                    color: white;
+                }
+
+                .save-btn:hover{
+                    background: transparent;
+                    color: $form-button-color;
+                }
+
+                a{
+                    text-decoration: none;
+                    color: $form-button-color;
+                }
+
+                a:hover{
+                    background: $form-button-color;
+                    color: white;
+                }
+            }
+        }
+    }
+}
