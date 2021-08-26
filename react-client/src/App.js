@@ -12,9 +12,6 @@ class App extends React.Component {
 
   constructor(props){
     super(props)
-    // this.state = {
-    //   loggedIn: false
-    // }
   }
 
   checkAccess = async ( access_token ) => {
@@ -32,7 +29,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         console.log(data)
-        localStorage.setItem('username', data.login)
+        sessionStorage.setItem('username', data.login)
       })
     }
   }
@@ -43,14 +40,14 @@ class App extends React.Component {
         
         <Switch>
           <Route path='/' exact>
-            {localStorage.getItem('username') !== 'null' ? <Redirect to="/quizzes"/> : <Login />}
+            {sessionStorage.getItem('username') !== null ? <Redirect to="/quizzes"/> : <Login />}
           </Route>
           <Route path='/callback' exact >
             <Callback checkAccess={this.checkAccess} />
           </Route>
           <Route path='/quizzes' exact >
-            {/* <Quizzes loggedIn={this.state.loggedIn}/> */}
-            <Quizzes />
+            {console.log(sessionStorage.getItem('username'))}
+            {sessionStorage.getItem('username') !== null ? <Quizzes loggedIn={true}/> : <Quizzes loggedIn={false}/>}
           </Route>
           <Route path='/questions' exact >
             {/* <Questions loggedIn={this.state.loggedIn} /> */}

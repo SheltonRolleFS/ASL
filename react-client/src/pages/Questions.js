@@ -11,7 +11,7 @@ function Questions() {
     const [questions, setQuestions] = useState([])
 
     useEffect(() => {
-        if(localStorage.getItem('username') !== 'null'){
+        if(sessionStorage.getItem('username') !== null){
             setLoggedIn(true)
 
             const opts = {
@@ -24,7 +24,6 @@ function Questions() {
             fetch('http://localhost:3001/questions', opts)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setQuestions(data)
             })
         }
