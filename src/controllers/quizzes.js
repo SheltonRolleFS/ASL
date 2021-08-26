@@ -21,7 +21,7 @@ router.get('/new', (req, res) => {
 
 router.post('/', quizIsValid, async (req, res) => {
     if(req.errors.length > 0){
-        res.render('quiz/create', { errors: req.errors })
+        res.redirect('http://localhost:3000/quizzes/new')
     }else{
         const name = req.body.name
         const weight = Number(req.body.weight)
@@ -33,7 +33,7 @@ router.post('/', quizIsValid, async (req, res) => {
         if(req.headers.accept.indexOf('/json') > -1){
             res.json(quiz)
         }else{
-            res.redirect('/quizzes/' + quiz.id)
+            res.redirect('http://localhost:3000/quizzes')
         }
     }
 })

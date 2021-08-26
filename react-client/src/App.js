@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 // Import Pages
 import Callback from './pages/Callback'
@@ -7,60 +6,45 @@ import Quizzes from './pages/Quizzes'
 import Questions from './pages/Questions'
 import Choices from './pages/Choices'
 import Login from './pages/Login'
+import Form from './components/Form'
 
-class App extends React.Component {
+function App(){
 
-  constructor(props){
-    super(props)
-  }
+  return (
+    <Router>
+      <Switch>
+        <Route path='/' exact>
+          <Login />
+        </Route>
+        <Route path='/callback' exact >
+          <Callback />
+        </Route>
 
-  checkAccess = async ( access_token ) => {
-    if(typeof(access_token) !== 'undefined'){
-      // this.setState({ loggedIn: true })
+        {/* ----- Index Routes ----- */}
+        <Route path='/quizzes' exact >
+          <Quizzes />
+        </Route>
+        <Route path='/questions' exact >
+          <Questions />
+        </Route>
+        <Route path='/choices' exact >
+          <Choices />
+        </Route>
 
-      const opts = {
-        method: 'GET',
-        headers: {
-          Authorization: `token ${access_token}`
-        }
-      }
+        {/* ----- Create Routes ----- */}
+        <Route path='/quizzes/new'>
+          <Form type='Quiz' />
+        </Route>
+        <Route path='/questions/new'>
+          <Form type='Question' />
+        </Route>
+        <Route path='/choices/new'>
+          <Form type='Choice' />
+        </Route>
 
-      await fetch('https://api.github.com/user', opts)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        sessionStorage.setItem('username', data.login)
-      })
-    }
-  }
-
-  render(){
-    return (
-      <Router>
-        
-        <Switch>
-          <Route path='/' exact>
-            {sessionStorage.getItem('username') !== null ? <Redirect to="/quizzes"/> : <Login />}
-          </Route>
-          <Route path='/callback' exact >
-            <Callback checkAccess={this.checkAccess} />
-          </Route>
-          <Route path='/quizzes' exact >
-            {console.log(sessionStorage.getItem('username'))}
-            {sessionStorage.getItem('username') !== null ? <Quizzes loggedIn={true}/> : <Quizzes loggedIn={false}/>}
-          </Route>
-          <Route path='/questions' exact >
-            {/* <Questions loggedIn={this.state.loggedIn} /> */}
-            <Questions />
-          </Route>
-          <Route path='/choices' exact >
-            {/* <Choices loggedIn={this.state.loggedIn} /> */}
-            <Choices />
-          </Route>
-        </Switch>
-      </Router>
-    );
-  }
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
