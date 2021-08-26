@@ -7,6 +7,7 @@ import Questions from './pages/Questions'
 import Choices from './pages/Choices'
 import Login from './pages/Login'
 import Form from './components/Form'
+import Item from './components/Item'
 
 function App(){
 
@@ -40,6 +41,17 @@ function App(){
         </Route>
         <Route path='/choices/new'>
           <Form type='Choice' />
+        </Route>
+
+        {/* ----- Show Routes ----- */}
+        <Route path='/quizzes/:id/show'>
+          <Item type='Quiz'/>
+        </Route>
+        <Route path='/questions/:id/show'>
+          <Item type='Question'/>
+        </Route>
+        <Route path='/choices/:id/show'>
+          <Item type='Choice'/>
         </Route>
 
       </Switch>
