@@ -79,7 +79,7 @@ router.get('/:id/delete', async (req, res) => {
     if(req.headers.accept.indexOf('/json') > -1){
         res.json({'success': true})
     }else{
-        res.redirect('/choices')
+        res.redirect('http://localhost:3000/choices')
     }
 
 })

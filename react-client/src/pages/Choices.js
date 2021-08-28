@@ -53,7 +53,7 @@ function Choices() {
                     }else{
                         rowType = 'odd-row'
                     }
-
+                    console.log(c)
                     return <Row key={c.id} rowType={rowType} choice={c} />
                 })}
             </section>
