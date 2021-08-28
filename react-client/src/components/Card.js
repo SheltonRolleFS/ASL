@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 const Card = ({ type, title, id }) => {
     return (
         <article className="item-card">

@@ -20,7 +20,7 @@ router.get('/new', (req, res) => {
 
 router.post('/', questionIsValid, async (req, res) => {
     if(req.errors.length > 0){
-        res.render('questions/create', { errors: req.errors })
+        res.redirect('http://localhost:3000/questions/new')
     }else{
         const question = await Questions.create( req.body )
         if(req.headers.accept.indexOf('/json') > -1){

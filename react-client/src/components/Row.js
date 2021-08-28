@@ -1,8 +1,28 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineExpandAlt } from 'react-icons/ai'
 
 const Row = ({ quiz, question, choice, rowType }) => {
+
+    const [quizDate, setQuizDate] = useState('')
+    const [questionDate, setQuestionDate] = useState('')
+    const [choiceDate, setChoiceDate] = useState('')
     
+    
+    useEffect(() => {
+
+        if(quiz){
+            const splitQuiz = quiz.createdAt.split('T')
+            setQuizDate(splitQuiz[0])
+        }else if(question){
+            const splitQuestion = question.createdAt.split('T')
+            setQuestionDate(splitQuestion[0])
+        }else{
+            const splitChoice = choice.createdAt.split('T')
+            setChoiceDate(splitChoice[0])
+        }
+
+    }, [])
 
     if(typeof(quiz) !== 'undefined'){
         return (
@@ -25,7 +45,7 @@ const Row = ({ quiz, question, choice, rowType }) => {
                 <p>{quiz.weight}</p>
                 <p>{quiz.id}</p>
                 <p>{quiz.Questions.length}</p>
-                <p>{quiz.createdAt}</p>
+                <p>{quizDate}</p>
             </div>
         )
     }else if(typeof(question) !== 'undefined'){
@@ -49,7 +69,7 @@ const Row = ({ quiz, question, choice, rowType }) => {
 
                 <p>{question.id}</p>
                 <p>{question.QuizId}</p>
-                <p>{question.createdAt}</p>
+                <p>{questionDate}</p>
             </div>
         )
     }else{
@@ -74,7 +94,7 @@ const Row = ({ quiz, question, choice, rowType }) => {
                 <p>{choice.id}</p>
                 <p>{choice.QuestionId}</p>
                 {choice.Question ? <p>{choice.Question.question}</p> : <p>No parent Question</p>}
-                <p>{choice.createdAt}</p>
+                <p>{choiceDate}</p>
             </div>
         )
     }
