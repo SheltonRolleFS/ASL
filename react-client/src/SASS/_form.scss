@@ -1,4 +1,4 @@
-.create-form{
+.form{
     display: flex;
     background: $form-background-color;
 
@@ -43,7 +43,7 @@
                 }
 
                 #quiz-weight{
-                    width: 25%;
+                    width: 50%;
                     text-align: center;
                 }
 

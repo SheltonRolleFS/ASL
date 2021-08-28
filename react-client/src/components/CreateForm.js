@@ -4,33 +4,27 @@ import { useState, useEffect } from 'react'
 // Component Imports
 import Header from './Header'
 
-const Form = ({ type }) => {
+const CreateForm = ({ type }) => {
     const [quizzes, setQuizzes] = useState([])
     const [questions, setQuestions] = useState([])
+
+    const opts = {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json'
+        }
+    }
     
     const fetchQuizzes = async () => {
-        const opts = {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            }
-        }
 
         await fetch('http://localhost:3001/quizzes', opts)
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             setQuizzes(data)
         })
     }
 
     const fetchQuestions = async () => {
-        const opts = {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            }
-        }
 
         await fetch('http://localhost:3001/questions', opts)
         .then(res => res.json())
@@ -53,7 +47,7 @@ const Form = ({ type }) => {
     switch (type){
         case 'Quiz':
             return (
-                <div className="create-form">
+                <div className="form">
                     <Header />
                     
                     <div className="content">
@@ -79,7 +73,7 @@ const Form = ({ type }) => {
             )
         case 'Question':
             return (
-                <div className="create-form">
+                <div className="form">
                     <Header />
 
                     <div className="content">
@@ -110,7 +104,7 @@ const Form = ({ type }) => {
             )
         case 'Choice':
             return (
-                <div className="create-form">
+                <div className="form">
                     <Header />
 
                     <div className="content">
@@ -146,4 +140,4 @@ const Form = ({ type }) => {
     }
 }
 
-export default Form
+export default CreateForm

@@ -6,7 +6,8 @@ import Quizzes from './pages/Quizzes'
 import Questions from './pages/Questions'
 import Choices from './pages/Choices'
 import Login from './pages/Login'
-import Form from './components/Form'
+import CreateForm from './components/CreateForm'
+import EditForm from './components/EditForm'
 import Item from './components/Item'
 
 function App(){
@@ -34,13 +35,13 @@ function App(){
 
         {/* ----- Create Routes ----- */}
         <Route path='/quizzes/new'>
-          <Form type='Quiz' />
+          <CreateForm type='Quiz' />
         </Route>
         <Route path='/questions/new'>
-          <Form type='Question' />
+          <CreateForm type='Question' />
         </Route>
         <Route path='/choices/new'>
-          <Form type='Choice' />
+          <CreateForm type='Choice' />
         </Route>
 
         {/* ----- Show Routes ----- */}
@@ -52,6 +53,17 @@ function App(){
         </Route>
         <Route path='/choices/:id/show'>
           <Item type='Choice'/>
+        </Route>
+
+        {/* ----- Edit Routes ----- */}
+        <Route path='/quizzes/:id/edit'>
+          <EditForm type="Quiz"/>
+        </Route>
+        <Route path='/questions/:id/edit'>
+          <EditForm type="Question"/>
+        </Route>
+        <Route path='/choices/:id/edit'>
+          <EditForm type="Choice"/>
         </Route>
 
       </Switch>
