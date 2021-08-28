@@ -17,11 +17,25 @@
             .group{
 
                 a{
+                    display: flex;
+                    align-items: center;
                     padding: 0;
                     font-size: 1.2rem;
                     background: transparent;
                     color: $link-color;
                     border: none;
+
+                    svg{
+                        transition: all 200ms ease-in;
+                    }
+                }
+
+                a:hover{
+
+                    svg{
+                        transform: translateX(-20%);
+                    }
+
                 }
 
                 h1{

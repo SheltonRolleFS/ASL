@@ -68,7 +68,7 @@ router.post('/:id', quizIsValid, async (req, res) => {
         if(req.headers.accept.indexOf('/json') > -1){
             res.json(quiz)
         }else{
-            res.redirect('/quizzes/' + id)
+            res.redirect(`http://localhost:3000/quizzes/${id}/show`)
         }
     }
 })

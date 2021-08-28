@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom"
 import { useState ,useEffect } from "react"
+import { IoIosArrowBack } from 'react-icons/io'
 
 // Component Imports
 import Header from './Header'
@@ -60,7 +61,7 @@ const Item = ({ type }) => {
                     <div className="content">
                         <div className="content__header">
                             <div className="group">
-                                <Link to="/quizzes">Go Back</Link>
+                                <Link to="/quizzes"><IoIosArrowBack />Go Back</Link>
                                 <h1>{quiz.name}</h1>
                             </div>
                             <Link to={`/quizzes/${quiz.id}/edit`}>Edit Quiz</Link>
