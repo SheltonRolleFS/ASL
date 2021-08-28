@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineExpandAlt } from 'react-icons/ai'
 
 const Row = ({ quiz, question, choice, rowType }) => {
+    
+
     if(typeof(quiz) !== 'undefined'){
         return (
             <div className={`quiz-row ${rowType}`}>
@@ -9,9 +11,9 @@ const Row = ({ quiz, question, choice, rowType }) => {
                     <p>{quiz.name}</p>
 
                     <div className="links">
-                        <Link to={`quizzes/${quiz.id}/delete`}>
+                        <a href={`http://localhost:3001/quizzes/${quiz.id}/delete`}>
                             <AiOutlineDelete />
-                        </Link>
+                        </a>
                         <Link to={`quizzes/${quiz.id}/edit`}>
                             <AiOutlineEdit />
                         </Link>
@@ -33,9 +35,9 @@ const Row = ({ quiz, question, choice, rowType }) => {
                     <p>{question.question}</p>
 
                     <div className="links">
-                        <Link to={`questions/${question.id}/delete`}>
+                        <a href={`http://localhost:3001/questions/${question.id}/delete`}>
                             <AiOutlineDelete />
-                        </Link>
+                        </a>
                         <Link to={`questions/${question.id}/edit`}>
                             <AiOutlineEdit />
                         </Link>
@@ -57,9 +59,9 @@ const Row = ({ quiz, question, choice, rowType }) => {
                     <p>{choice.choice}</p>
 
                     <div className="links">
-                        <Link to={`choices/${choice.id}/delete`}>
+                        <a href={`http://localhost:3001/choices/${choice.id}/delete`}>
                             <AiOutlineDelete />
-                        </Link>
+                        </a>
                         <Link to={`choices/${choice.id}/edit`}>
                             <AiOutlineEdit />
                         </Link>
@@ -71,7 +73,7 @@ const Row = ({ quiz, question, choice, rowType }) => {
 
                 <p>{choice.id}</p>
                 <p>{choice.QuestionId}</p>
-                <p>{choice.Question.question}</p>
+                {choice.Question ? <p>{choice.Question.question}</p> : <p>No parent Question</p>}
                 <p>{choice.createdAt}</p>
             </div>
         )
