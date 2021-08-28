@@ -51,7 +51,7 @@ router.get('/:id/edit', async (req, res) => {
 router.post('/:id', questionIsValid, async (req, res) => {
     if(req.errors.length > 0){
         const question = await Questions.findByPk( Number(req.params.id) )
-        res.render('questions/edit', { errors: req.errors, question })
+        res.redirect(`http://localhost:3000/questions/${req.params.id}/edit`)
     }else{
         let question = await Questions.update( req.body, {
             where: { id: Number(req.params.id) }
