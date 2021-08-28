@@ -87,7 +87,7 @@ const Item = ({ type }) => {
                         <div className="content__questions-list">
                             <h3>Questions</h3>
                             {quiz.Questions.map((q) => {
-                                return <Card type="questions" title={q.question} id={q.id} />
+                                return <Card key={q.id} type="questions" title={q.question} id={q.id} />
                             })}
                         </div>
                     </div>
@@ -101,7 +101,7 @@ const Item = ({ type }) => {
                     <div className="content">
                         <div className="content__header">
                             <div className="group">
-                                <Link to="/questions">Go Back</Link>
+                                <Link to="/questions"><IoIosArrowBack />Go Back</Link>
                                 <h1>{question.question}</h1>
                             </div>
                             <Link to={`/questions/${question.id}/edit`}>Edit Question</Link>
@@ -134,7 +134,7 @@ const Item = ({ type }) => {
                     <div className="content">
                         <div className="content__header">
                             <div className="group">
-                                <Link to="/choices">Go Back</Link>
+                                <Link to="/choices"><IoIosArrowBack />Go Back</Link>
                                 <h1>{choice.choice}</h1>
                             </div>
                             <Link to={`/choices/${choice.id}/edit`}>Edit Choice</Link>
