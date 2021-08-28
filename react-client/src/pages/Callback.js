@@ -16,13 +16,13 @@ function Callback() {
         await fetch('https://api.github.com/user', opts)
             .then(res => res.json())
             .then(data => {
-            sessionStorage.setItem('username', data.login)
-        })
+                localStorage.setItem('username', data.login)
+            })
     }
 
     if(access_token !== ''){
         logUserIn()
-        return <Redirect to='/quizzes' />
+        return <Redirect to='/quizzes'/>
     }
 
     return (
