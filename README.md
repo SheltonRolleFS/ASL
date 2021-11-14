@@ -1,3 +1,11 @@
+# Download Instructions
+
+- Clone the repository
+- Open terminal and navigate to the root directory of the project
+- Run ```javascript npm install ``` to install the necessary dependencies
+- CD into the 'react-client' folder in your terminal using the ```cd react-client``` command
+- Once you are in the react-client directory, once again run the ```javascript npm install ``` command
+
 # Description
 This repository stores all my work that I've done in my "Advanced Server-Side Languages" class. This class lasted the entirety of August 2021 and introduced 
 new skills such as creating RESTful APi's, using OAuth Authentication to let user's login with third-party accounts and creating full stack applications with 
